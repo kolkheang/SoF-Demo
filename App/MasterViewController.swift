@@ -199,7 +199,8 @@ class MasterViewController: UITableViewController {
 		var i = 0
 		for resType in resourceTypes {
 			let ii = i
-			resType.type.search(["patient": patientId.string]).perform(smart.server) { bundle, error in
+            let searchParam = resType.type.resourceType == "Patient" ? ["_id": patientId.string] : ["patient": patientId.string];
+			resType.type.search(searchParam).perform(smart.server) { bundle, error in
 				if nil != error {
 					resType.error = error
 				}

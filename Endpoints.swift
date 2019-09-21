@@ -46,6 +46,19 @@ func configuredEndpoints() -> [Endpoint] {
 	fhirorg.authProperties.embedded = true
 	endpoints.append(Endpoint(client: fhirorg, name: "Test at FHIR.org"))
 	
+    let cerner = LenientClient(
+        baseURL: URL(string: "https://fhir-ehr.sandboxcerner.com/r4/0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca")!,
+        settings: [
+            "client_name": "Kol Standalone Provider Mobile App",
+            "client_id": "36d877eb-f4ae-484b-80a5-052b829adcfd",
+            "redirect": "smartapp://callback",
+            "scope": "openid profile online_access user/Patient.read user/Encounter.read",
+            "logo_uri": "https://avatars1.githubusercontent.com/u/7401080",
+            ])
+    cerner.authProperties.granularity = .patientSelectNative
+    cerner.authProperties.embedded = true
+    endpoints.append(Endpoint(client: cerner, name: "Cerner Sandbox"))
+
 	return endpoints
 }
 
